@@ -1,5 +1,7 @@
 # Colorado Driver Test Learning Lab
 
+![Colorado Driver Test Learning Lab preview](assets/readme-preview.png)
+
 An interactive, browser-based study app for the Colorado driver knowledge test.
 
 ## What It Includes
