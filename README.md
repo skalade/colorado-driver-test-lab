@@ -4,6 +4,10 @@
 
 An interactive, browser-based study app for the Colorado driver knowledge test.
 
+## AI Disclaimer
+
+This app was nearly one-shot with Codex and GPT-5.5. I wanted a practice tool to prep for my knowledge test and didn't like the online options so decided to cook up my own. I passed the test so I think it works pretty well as a learning aide and was worth sharing. I figured people can still point their agents to this repo for inspiration to generate their own learning tools.
+
 ## What It Includes
 
 - Guided lessons for Colorado permits, minor driver rules, traffic laws, signs, markings, right-of-way, defensive driving, and Colorado road conditions
