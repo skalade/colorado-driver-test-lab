@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Colorado Driver Test Learning Lab</title>
+    <meta
+      name="description"
+      content="An interactive Colorado driver knowledge test learning experience with lessons, road sign drills, scenarios, and mock exams."
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#dashboard" aria-label="Colorado Driver Test Learning Lab home">
+        <span class="brand-mark" aria-hidden="true">CO</span>
+        <span>
+          <strong>Colorado Driver Test Learning Lab</strong>
+          <small>Knowledge, road signs, scenarios, and readiness checks</small>
+        </span>
+      </a>
+      <nav class="nav-tabs" aria-label="Primary">
+        <button class="nav-tab is-active" data-view="dashboard">Dashboard</button>
+        <button class="nav-tab" data-view="learn">Learn</button>
+        <button class="nav-tab" data-view="signs">Sign Lab</button>
+        <button class="nav-tab" data-view="scenarios">Scenarios</button>
+        <button class="nav-tab" data-view="mock">Mock Test</button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="dashboard" class="view is-active" aria-labelledby="dashboard-title">
+        <div class="hero-band">
+          <div class="hero-copy">
+            <p class="eyebrow">Based on Colorado DMV and CDOT source material</p>
+            <h1 id="dashboard-title">Build the habits and rule memory needed for the Colorado driver test.</h1>
+            <p>
+              Move through focused lessons, drill the signs and markings that cause mistakes, then prove readiness with a timed 25-question practice exam.
+            </p>
+            <div class="hero-actions">
+              <button class="button primary" data-view-jump="learn">Start Next Lesson</button>
+              <button class="button secondary" data-view-jump="mock">Take Mock Test</button>
+            </div>
+          </div>
+          <div class="road-visual" aria-hidden="true">
+            <div class="mountain m1"></div>
+            <div class="mountain m2"></div>
+            <div class="sun"></div>
+            <div class="road">
+              <span class="lane-mark"></span>
+              <span class="lane-mark"></span>
+              <span class="lane-mark"></span>
+            </div>
+            <div class="visual-sign stop-sign">STOP</div>
+            <div class="visual-sign warning-sign"></div>
+            <div class="visual-car"></div>
+          </div>
+        </div>
+
+        <section class="summary-grid" aria-label="Progress summary">
+          <article class="summary-tile">
+            <span class="tile-label">Course Progress</span>
+            <strong id="progressPercent">0%</strong>
+            <div class="meter" aria-hidden="true"><span id="progressBar"></span></div>
+          </article>
+          <article class="summary-tile">
+            <span class="tile-label">Lessons Complete</span>
+            <strong id="completedCount">0 / 0</strong>
+          </article>
+          <article class="summary-tile">
+            <span class="tile-label">Best Mock Score</span>
+            <strong id="bestScore">Not yet</strong>
+          </article>
+          <article class="summary-tile">
+            <span class="tile-label">Weak Areas</span>
+            <strong id="weakAreaCount">0</strong>
+          </article>
+        </section>
+
+        <section class="panel-grid">
+          <section class="panel span-2" aria-labelledby="path-title">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">Personalized path</p>
+                <h2 id="path-title">Tell the lab where you are starting.</h2>
+              </div>
+            </div>
+            <div class="planner">
+              <label>
+                Age range
+                <select id="ageSelect">
+                  <option value="15">15 to 15 years, 6 months</option>
+                  <option value="15_6">15 years, 6 months to 16</option>
+                  <option value="16_17">16 to 17</option>
+                  <option value="18_20">18 to 20</option>
+                  <option value="21_plus">21 or older</option>
+                </select>
+              </label>
+              <label>
+                Current status
+                <select id="statusSelect">
+                  <option value="new">Never had a license</option>
+                  <option value="permit">Have a Colorado permit</option>
+                  <option value="expired">License expired or canceled over 12 months</option>
+                  <option value="transfer">Moving with another state license</option>
+                </select>
+              </label>
+            </div>
+            <div id="plannerResult" class="planner-result" aria-live="polite"></div>
+          </section>
+
+          <section class="panel" aria-labelledby="next-title">
+            <div class="section-heading compact">
+              <div>
+                <p class="eyebrow">Next up</p>
+                <h2 id="next-title">Recommended lesson</h2>
+              </div>
+            </div>
+            <div id="nextLesson" class="next-lesson"></div>
+          </section>
+        </section>
+
+        <section class="panel" aria-labelledby="modules-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Course map</p>
+              <h2 id="modules-title">Everything to study before test day</h2>
+            </div>
+            <button id="resetProgress" class="button ghost">Reset Progress</button>
+          </div>
+          <div id="moduleCards" class="module-grid"></div>
+        </section>
+
+        <section class="source-band" aria-labelledby="sources-title">
+          <div>
+            <p class="eyebrow">Source links</p>
+            <h2 id="sources-title">Official references to keep nearby</h2>
+          </div>
+          <div id="sourceLinks" class="source-links"></div>
+        </section>
+      </section>
+
+      <section id="learn" class="view" aria-labelledby="learn-title">
+        <div class="view-header">
+          <div>
+            <p class="eyebrow">Guided lessons</p>
+            <h1 id="learn-title">Learn the rules, then check recall.</h1>
+          </div>
+          <button class="button secondary" data-view-jump="dashboard">Back to Dashboard</button>
+        </div>
+        <div class="learning-layout">
+          <aside class="lesson-list" aria-label="Lessons">
+            <div id="lessonList"></div>
+          </aside>
+          <article id="lessonContent" class="lesson-content" aria-live="polite"></article>
+        </div>
+      </section>
+
+      <section id="signs" class="view" aria-labelledby="signs-title">
+        <div class="view-header">
+          <div>
+            <p class="eyebrow">Road sign and marking recall</p>
+            <h1 id="signs-title">Recognize what the road is telling you.</h1>
+          </div>
+          <div class="segmented" role="group" aria-label="Sign filters">
+            <button class="segment is-active" data-sign-filter="all">All</button>
+            <button class="segment" data-sign-filter="regulatory">Regulatory</button>
+            <button class="segment" data-sign-filter="warning">Warning</button>
+            <button class="segment" data-sign-filter="marking">Markings</button>
+          </div>
+        </div>
+        <div class="drill-shell">
+          <section id="signDrill" class="drill-card" aria-live="polite"></section>
+          <aside class="panel drill-side" aria-label="Sign study set">
+            <h2>Study Set</h2>
+            <div id="signSet" class="sign-set"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="scenarios" class="view" aria-labelledby="scenarios-title">
+        <div class="view-header">
+          <div>
+            <p class="eyebrow">Decision practice</p>
+            <h1 id="scenarios-title">Choose the safe legal move.</h1>
+          </div>
+          <button id="shuffleScenarios" class="button secondary">Shuffle Scenarios</button>
+        </div>
+        <div id="scenarioBoard" class="scenario-board"></div>
+      </section>
+
+      <section id="mock" class="view" aria-labelledby="mock-title">
+        <div class="view-header">
+          <div>
+            <p class="eyebrow">Readiness check</p>
+            <h1 id="mock-title">25-question Colorado-style mock test.</h1>
+          </div>
+          <div class="mock-controls">
+            <button id="newMock" class="button secondary">New Test</button>
+            <button id="submitMock" class="button primary">Submit</button>
+          </div>
+        </div>
+        <div id="mockStatus" class="mock-status" aria-live="polite"></div>
+        <div id="mockTest" class="mock-test"></div>
+      </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
